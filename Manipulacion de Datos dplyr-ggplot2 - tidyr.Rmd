@@ -1,0 +1,144 @@
+---
+title: "Manipulación y Visualización de Datos"
+Subtitle: "Trabajando con {tidyverse}"
+author: "Raúl Trelles"
+date: "26/12/2021"
+output: 
+    xaringan::moon_reader:
+      css: ["default-fonts", "default", "lucy" ]
+      nature:
+        highlightStyle: hithub
+        highlightLine: true
+        countIncrementalSlides: true 
+        #ratio: "4:3" ## 16:9
+---
+
+# Se Trabajaran las librerias : 
+##    {dplyr}   --> filtra, seleccion de columnas, ordenar, añadir variables
+##    {ggplot2} --> visualización de datos
+##    {tidyr}   --> manipulacion y organización de un dataset
+
+# Instalación
+Se instalaran los paquetes especificos 
+```{r}
+# install.packages(c("dplyr", "ggplot2", "tidyr"))
+```
+o se instalan toda la libreria de tidyverse
+```{r}
+# install.packages("tidyverse")
+```
+
+
+##Operador pipe
+veamos a un operador muy especial : pipe %>%
+
+Si tenemos la secuencia : third(secound(first(x)))
+
+al transformarlo usando el operador pipe, seria: first(x) %>% secound(x) %>% third(x)
+ahora iniciaemos con la libreria 
+# dplayr 
+## Funcion : select
+Nos permite seleccionar los campos que requerimos visualizar
+
+```{r}
+library(dplyr)
+select(mtcars, mpg, cyl, hp, drat, wt, qsec, vs, am, gear, carb )
+```
+
+Pero si requiriera saber o informarme de la estructura de un dataset, usaria la 
+## funcion glimpse
+es muy similar a la funcion str
+
+```{r}
+library(dplyr)
+glimpse(x = mtcars)
+```
+
+# Función arrange
+ahora nos corresponde ordenar los datos, para ello usamos la funcion arrange que ordena 
+de manera creciente
+
+```{r}
+library
+# Se usa el desc, para ordenar de mayor a menor
+arrange(mtcars, desc(mtcars$cyl))
+```
+
+
+## Función rename
+usamos esta funcion para renombrar visualmente los campos de los datos, el resto
+de los campos no evaluados siguen con el mismo nombre
+```{r}
+library(dplyr)
+rename(storms, tormente = name, viento = wind, presion = pressure, Anio = year)
+```
+
+## Funcion mutate
+esta funcion nos permite crear nuevas variables partiendo de otras
+
+```{r}
+library(dplyr)
+mutate(storms, ratio = pressure / wind)
+```
+
+# Funcion filter
+esta funcion es una de las mas usadas, se usa para filtrar observaciones o inform.
+tabla de caracteristicas  :
+%in%, pertenece al conjnto
+!=, diferente que
+is na, es NA
+xor,  o incluso.
+all,  todos los verdaderos
+any,  cualquier verdadero
+```{r}
+library(dplyr) 
+filter(storms, storms$wind >= 50 & storms$pressure <= 1010 & storms$month == 6 & year == 2015)
+```
+
+#Funcion summarise
+esta funcion nos permite realizar operaciones de sjuma, mediana, var, etc, entre las funciones
+min(), max(), mean(), median(), sum(), var(), sd(), first(), last(), n(),  n_distinct(), nth()
+
+
+```{r}
+library(dplyr)
+summarise(storms, mediana = median(wind), vcarianza = var (wind)) 
+```
+
+# Funcion group_by
+```{r}
+library(dplyr)
+group_by(storms, name)
+```
+
+
+```{r}
+library(dplyr)
+storms %>% group_by(name) %>% 
+  summarise(media = mean(wind), suma = sum(wind), n = n())
+```
+
+# funcion gather()
+
+nos ayuda a reordenar los vallores de una columna, y las tranmsforma en filas.
+
+```{r}
+#library(dplyr)
+#gather(Stroms, "fecha", year:day  )
+```
+
+# ggplot2
+Nos permite graficar los dataset
+
+```{r}
+library(ggplot2)
+ggplot(diamonds, mapping = aes(x = carat, y = price, color = cut)) +
+  geom_point() + 
+  facet_wrap(~cut)
+  labs(title = "", subtitle ="", y = "", x="", caption = "esta es una prueba")
+```
+
+
+
+
+

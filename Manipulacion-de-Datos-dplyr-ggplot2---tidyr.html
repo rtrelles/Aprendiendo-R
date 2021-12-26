@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Manipulación y Visualización de Datos</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raúl Trelles" />
+    <script src="Manipulacion-de-Datos-dplyr-ggplot2---tidyr_files/header-attrs-2.11/header-attrs.js"></script>
+    <link href="Manipulacion-de-Datos-dplyr-ggplot2---tidyr_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link href="Manipulacion-de-Datos-dplyr-ggplot2---tidyr_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="Manipulacion-de-Datos-dplyr-ggplot2---tidyr_files/remark-css-0.0.1/lucy.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Manipulación y Visualización de Datos
+### Raúl Trelles
+### 26/12/2021
+
+---
+
+
+# Se Trabajaran las librerias : 
+##    {dplyr}   --&gt; filtra, seleccion de columnas, ordenar, añadir variables
+##    {ggplot2} --&gt; visualización de datos
+##    {tidyr}   --&gt; manipulacion y organización de un dataset
+
+# Instalación
+Se instalaran los paquetes especificos 
+
+```r
+# install.packages(c("dplyr", "ggplot2", "tidyr"))
+```
+o se instalan toda la libreria de tidyverse
+
+```r
+# install.packages("tidyverse")
+```
+
+
+##Operador pipe
+veamos a un operador muy especial : pipe %&gt;%
+
+Si tenemos la secuencia : third(secound(first(x)))
+
+al transformarlo usando el operador pipe, seria: first(x) %&gt;% secound(x) %&gt;% third(x)
+ahora iniciaemos con la libreria 
+# dplayr 
+## Funcion : select
+Nos permite seleccionar los campos que requerimos visualizar
+
+
+```r
+library(dplyr)
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```r
+select(mtcars, mpg, cyl, hp, drat, wt, qsec, vs, am, gear, carb )
+```
+
+```
+##                      mpg cyl  hp drat    wt  qsec vs am gear carb
+## Mazda RX4           21.0   6 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag       21.0   6 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710          22.8   4  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive      21.4   6 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout   18.7   8 175 3.15 3.440 17.02  0  0    3    2
+## Valiant             18.1   6 105 2.76 3.460 20.22  1  0    3    1
+## Duster 360          14.3   8 245 3.21 3.570 15.84  0  0    3    4
+## Merc 240D           24.4   4  62 3.69 3.190 20.00  1  0    4    2
+## Merc 230            22.8   4  95 3.92 3.150 22.90  1  0    4    2
+## Merc 280            19.2   6 123 3.92 3.440 18.30  1  0    4    4
+## Merc 280C           17.8   6 123 3.92 3.440 18.90  1  0    4    4
+## Merc 450SE          16.4   8 180 3.07 4.070 17.40  0  0    3    3
+## Merc 450SL          17.3   8 180 3.07 3.730 17.60  0  0    3    3
+## Merc 450SLC         15.2   8 180 3.07 3.780 18.00  0  0    3    3
+## Cadillac Fleetwood  10.4   8 205 2.93 5.250 17.98  0  0    3    4
+## Lincoln Continental 10.4   8 215 3.00 5.424 17.82  0  0    3    4
+## Chrysler Imperial   14.7   8 230 3.23 5.345 17.42  0  0    3    4
+## Fiat 128            32.4   4  66 4.08 2.200 19.47  1  1    4    1
+## Honda Civic         30.4   4  52 4.93 1.615 18.52  1  1    4    2
+## Toyota Corolla      33.9   4  65 4.22 1.835 19.90  1  1    4    1
+## Toyota Corona       21.5   4  97 3.70 2.465 20.01  1  0    3    1
+## Dodge Challenger    15.5   8 150 2.76 3.520 16.87  0  0    3    2
+## AMC Javelin         15.2   8 150 3.15 3.435 17.30  0  0    3    2
+## Camaro Z28          13.3   8 245 3.73 3.840 15.41  0  0    3    4
+## Pontiac Firebird    19.2   8 175 3.08 3.845 17.05  0  0    3    2
+## Fiat X1-9           27.3   4  66 4.08 1.935 18.90  1  1    4    1
+## Porsche 914-2       26.0   4  91 4.43 2.140 16.70  0  1    5    2
+## Lotus Europa        30.4   4 113 3.77 1.513 16.90  1  1    5    2
+## Ford Pantera L      15.8   8 264 4.22 3.170 14.50  0  1    5    4
+## Ferrari Dino        19.7   6 175 3.62 2.770 15.50  0  1    5    6
+## Maserati Bora       15.0   8 335 3.54 3.570 14.60  0  1    5    8
+## Volvo 142E          21.4   4 109 4.11 2.780 18.60  1  1    4    2
+```
+
+Pero si requiriera saber o informarme de la estructura de un dataset, usaria la 
+## funcion glimpse
+es muy similar a la funcion str
+
+
+```r
+library(dplyr)
+glimpse(x = mtcars)
+```
+
+```
+## Rows: 32
+## Columns: 11
+## $ mpg  &lt;dbl&gt; 21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 19.2, 17.8,~
+## $ cyl  &lt;dbl&gt; 6, 6, 4, 6, 8, 6, 8, 4, 4, 6, 6, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4, 8,~
+## $ disp &lt;dbl&gt; 160.0, 160.0, 108.0, 258.0, 360.0, 225.0, 360.0, 146.7, 140.8, 16~
+## $ hp   &lt;dbl&gt; 110, 110, 93, 110, 175, 105, 245, 62, 95, 123, 123, 180, 180, 180~
+## $ drat &lt;dbl&gt; 3.90, 3.90, 3.85, 3.08, 3.15, 2.76, 3.21, 3.69, 3.92, 3.92, 3.92,~
+## $ wt   &lt;dbl&gt; 2.620, 2.875, 2.320, 3.215, 3.440, 3.460, 3.570, 3.190, 3.150, 3.~
+## $ qsec &lt;dbl&gt; 16.46, 17.02, 18.61, 19.44, 17.02, 20.22, 15.84, 20.00, 22.90, 18~
+## $ vs   &lt;dbl&gt; 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0,~
+## $ am   &lt;dbl&gt; 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,~
+## $ gear &lt;dbl&gt; 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3,~
+## $ carb &lt;dbl&gt; 4, 4, 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1, 2,~
+```
+
+# Función arrange
+ahora nos corresponde ordenar los datos, para ello usamos la funcion arrange que ordena 
+de manera creciente
+
+
+```r
+library
+```
+
+```
+## function (package, help, pos = 2, lib.loc = NULL, character.only = FALSE, 
+##     logical.return = FALSE, warn.conflicts, quietly = FALSE, 
+##     verbose = getOption("verbose"), mask.ok, exclude, include.only, 
+##     attach.required = missing(include.only)) 
+## {
+##     conf.ctrl &lt;- getOption("conflicts.policy")
+##     if (is.character(conf.ctrl)) 
+##         conf.ctrl &lt;- switch(conf.ctrl, strict = list(error = TRUE, 
+##             warn = FALSE), depends.ok = list(error = TRUE, generics.ok = TRUE, 
+##             can.mask = c("base", "methods", "utils", "grDevices", 
+##                 "graphics", "stats"), depends.ok = TRUE), warning(gettextf("unknown conflict policy: %s", 
+##             sQuote(conf.ctrl)), call. = FALSE, domain = NA))
+##     if (!is.list(conf.ctrl)) 
+##         conf.ctrl &lt;- NULL
+##     stopOnConflict &lt;- isTRUE(conf.ctrl$error)
+##     if (missing(warn.conflicts)) 
+##         warn.conflicts &lt;- if (isFALSE(conf.ctrl$warn)) 
+##             FALSE
+##         else TRUE
+##     if ((!missing(include.only)) &amp;&amp; (!missing(exclude))) 
+##         stop(gettext("only one of 'include.only' and 'exclude' can be used"), 
+##             call. = FALSE, domain = NA)
+##     testRversion &lt;- function(pkgInfo, pkgname, pkgpath) {
+##         if (is.null(built &lt;- pkgInfo$Built)) 
+##             stop(gettextf("package %s has not been installed properly\n", 
+##                 sQuote(pkgname)), call. = FALSE, domain = NA)
+##         R_version_built_under &lt;- as.numeric_version(built$R)
+##         if (R_version_built_under &lt; "3.0.0") 
+##             stop(gettextf("package %s was built before R 3.0.0: please re-install it", 
+##                 sQuote(pkgname)), call. = FALSE, domain = NA)
+##         current &lt;- getRversion()
+##         if (length(Rdeps &lt;- pkgInfo$Rdepends2)) {
+##             for (dep in Rdeps) if (length(dep) &gt; 1L) {
+##                 target &lt;- dep$version
+##                 res &lt;- do.call(dep$op, if (is.character(target)) 
+##                   list(as.numeric(R.version[["svn rev"]]), as.numeric(sub("^r", 
+##                     "", target)))
+##                 else list(current, as.numeric_version(target)))
+##                 if (!res) 
+##                   stop(gettextf("This is R %s, package %s needs %s %s", 
+##                     current, sQuote(pkgname), dep$op, target), 
+##                     call. = FALSE, domain = NA)
+##             }
+##         }
+##         if (R_version_built_under &gt; current) 
+##             warning(gettextf("package %s was built under R version %s", 
+##                 sQuote(pkgname), as.character(built$R)), call. = FALSE, 
+##                 domain = NA)
+##         platform &lt;- built$Platform
+##         r_arch &lt;- .Platform$r_arch
+##         if (.Platform$OS.type == "unix") {
+##         }
+##         else {
+##             if (nzchar(platform) &amp;&amp; !grepl("mingw", platform)) 
+##                 stop(gettextf("package %s was built for %s", 
+##                   sQuote(pkgname), platform), call. = FALSE, 
+##                   domain = NA)
+##         }
+##         if (nzchar(r_arch) &amp;&amp; file.exists(file.path(pkgpath, 
+##             "libs")) &amp;&amp; !file.exists(file.path(pkgpath, "libs", 
+##             r_arch))) 
+##             stop(gettextf("package %s is not installed for 'arch = %s'", 
+##                 sQuote(pkgname), r_arch), call. = FALSE, domain = NA)
+##     }
+##     checkNoGenerics &lt;- function(env, pkg) {
+##         nenv &lt;- env
+##         ns &lt;- .getNamespace(as.name(pkg))
+##         if (!is.null(ns)) 
+##             nenv &lt;- asNamespace(ns)
+##         if (exists(".noGenerics", envir = nenv, inherits = FALSE)) 
+##             TRUE
+##         else {
+##             !any(startsWith(names(env), ".__T"))
+##         }
+##     }
+##     checkConflicts &lt;- function(package, pkgname, pkgpath, nogenerics, 
+##         env) {
+##         dont.mind &lt;- c("last.dump", "last.warning", ".Last.value", 
+##             ".Random.seed", ".Last.lib", ".onDetach", ".packageName", 
+##             ".noGenerics", ".required", ".no_S3_generics", ".Depends", 
+##             ".requireCachedGenerics")
+##         sp &lt;- search()
+##         lib.pos &lt;- which(sp == pkgname)
+##         ob &lt;- names(as.environment(lib.pos))
+##         if (!nogenerics) {
+##             these &lt;- ob[startsWith(ob, ".__T__")]
+##             gen &lt;- gsub(".__T__(.*):([^:]+)", "\\1", these)
+##             from &lt;- gsub(".__T__(.*):([^:]+)", "\\2", these)
+##             gen &lt;- gen[from != package]
+##             ob &lt;- ob[!(ob %in% gen)]
+##         }
+##         ipos &lt;- seq_along(sp)[-c(lib.pos, match(c("Autoloads", 
+##             "CheckExEnv"), sp, 0L))]
+##         cpos &lt;- NULL
+##         conflicts &lt;- vector("list", 0)
+##         for (i in ipos) {
+##             obj.same &lt;- match(names(as.environment(i)), ob, nomatch = 0L)
+##             if (any(obj.same &gt; 0L)) {
+##                 same &lt;- ob[obj.same]
+##                 same &lt;- same[!(same %in% dont.mind)]
+##                 Classobjs &lt;- which(startsWith(same, ".__"))
+##                 if (length(Classobjs)) 
+##                   same &lt;- same[-Classobjs]
+##                 same.isFn &lt;- function(where) vapply(same, exists, 
+##                   NA, where = where, mode = "function", inherits = FALSE)
+##                 same &lt;- same[same.isFn(i) == same.isFn(lib.pos)]
+##                 not.Ident &lt;- function(ch, TRAFO = identity, ...) vapply(ch, 
+##                   function(.) !identical(TRAFO(get(., i)), TRAFO(get(., 
+##                     lib.pos)), ...), NA)
+##                 if (length(same)) 
+##                   same &lt;- same[not.Ident(same)]
+##                 if (length(same) &amp;&amp; identical(sp[i], "package:base")) 
+##                   same &lt;- same[not.Ident(same, ignore.environment = TRUE)]
+##                 if (length(same)) {
+##                   conflicts[[sp[i]]] &lt;- same
+##                   cpos[sp[i]] &lt;- i
+##                 }
+##             }
+##         }
+##         if (length(conflicts)) {
+##             if (stopOnConflict) {
+##                 emsg &lt;- ""
+##                 pkg &lt;- names(conflicts)
+##                 notOK &lt;- vector("list", 0)
+##                 for (i in seq_along(conflicts)) {
+##                   pkgname &lt;- sub("^package:", "", pkg[i])
+##                   if (pkgname %in% canMaskEnv$canMask) 
+##                     next
+##                   same &lt;- conflicts[[i]]
+##                   if (is.list(mask.ok)) 
+##                     myMaskOK &lt;- mask.ok[[pkgname]]
+##                   else myMaskOK &lt;- mask.ok
+##                   if (isTRUE(myMaskOK)) 
+##                     same &lt;- NULL
+##                   else if (is.character(myMaskOK)) 
+##                     same &lt;- setdiff(same, myMaskOK)
+##                   if (length(same)) {
+##                     notOK[[pkg[i]]] &lt;- same
+##                     msg &lt;- .maskedMsg(sort(same), pkg = sQuote(pkg[i]), 
+##                       by = cpos[i] &lt; lib.pos)
+##                     emsg &lt;- paste(emsg, msg, sep = "\n")
+##                   }
+##                 }
+##                 if (length(notOK)) {
+##                   msg &lt;- gettextf("Conflicts attaching package %s:\n%s", 
+##                     sQuote(package), emsg)
+##                   stop(errorCondition(msg, package = package, 
+##                     conflicts = conflicts, class = "packageConflictError"))
+##                 }
+##             }
+##             if (warn.conflicts) {
+##                 packageStartupMessage(gettextf("\nAttaching package: %s\n", 
+##                   sQuote(package)), domain = NA)
+##                 pkg &lt;- names(conflicts)
+##                 for (i in seq_along(conflicts)) {
+##                   msg &lt;- .maskedMsg(sort(conflicts[[i]]), pkg = sQuote(pkg[i]), 
+##                     by = cpos[i] &lt; lib.pos)
+##                   packageStartupMessage(msg, domain = NA)
+##                 }
+##             }
+##         }
+##     }
+##     if (verbose &amp;&amp; quietly) 
+##         message("'verbose' and 'quietly' are both true; being verbose then ..")
+##     if (!missing(package)) {
+##         if (is.null(lib.loc)) 
+##             lib.loc &lt;- .libPaths()
+##         lib.loc &lt;- lib.loc[dir.exists(lib.loc)]
+##         if (!character.only) 
+##             package &lt;- as.character(substitute(package))
+##         if (length(package) != 1L) 
+##             stop("'package' must be of length 1")
+##         if (is.na(package) || (package == "")) 
+##             stop("invalid package name")
+##         pkgname &lt;- paste0("package:", package)
+##         newpackage &lt;- is.na(match(pkgname, search()))
+##         if (newpackage) {
+##             pkgpath &lt;- find.package(package, lib.loc, quiet = TRUE, 
+##                 verbose = verbose)
+##             if (length(pkgpath) == 0L) {
+##                 if (length(lib.loc) &amp;&amp; !logical.return) 
+##                   stop(packageNotFoundError(package, lib.loc, 
+##                     sys.call()))
+##                 txt &lt;- if (length(lib.loc)) 
+##                   gettextf("there is no package called %s", sQuote(package))
+##                 else gettext("no library trees found in 'lib.loc'")
+##                 if (logical.return) {
+##                   if (!quietly) 
+##                     warning(txt, domain = NA)
+##                   return(FALSE)
+##                 }
+##                 else stop(txt, domain = NA)
+##             }
+##             which.lib.loc &lt;- normalizePath(dirname(pkgpath), 
+##                 "/", TRUE)
+##             pfile &lt;- system.file("Meta", "package.rds", package = package, 
+##                 lib.loc = which.lib.loc)
+##             if (!nzchar(pfile)) 
+##                 stop(gettextf("%s is not a valid installed package", 
+##                   sQuote(package)), domain = NA)
+##             pkgInfo &lt;- readRDS(pfile)
+##             testRversion(pkgInfo, package, pkgpath)
+##             if (is.character(pos)) {
+##                 npos &lt;- match(pos, search())
+##                 if (is.na(npos)) {
+##                   warning(gettextf("%s not found on search path, using pos = 2", 
+##                     sQuote(pos)), domain = NA)
+##                   pos &lt;- 2
+##                 }
+##                 else pos &lt;- npos
+##             }
+##             deps &lt;- unique(names(pkgInfo$Depends))
+##             depsOK &lt;- isTRUE(conf.ctrl$depends.ok)
+##             if (depsOK) {
+##                 canMaskEnv &lt;- dynGet("__library_can_mask__", 
+##                   NULL)
+##                 if (is.null(canMaskEnv)) {
+##                   canMaskEnv &lt;- new.env()
+##                   canMaskEnv$canMask &lt;- union("base", conf.ctrl$can.mask)
+##                   "__library_can_mask__" &lt;- canMaskEnv
+##                 }
+##                 canMaskEnv$canMask &lt;- unique(c(package, deps, 
+##                   canMaskEnv$canMask))
+##             }
+##             else canMaskEnv &lt;- NULL
+##             if (attach.required) 
+##                 .getRequiredPackages2(pkgInfo, quietly = quietly)
+##             cr &lt;- conflictRules(package)
+##             if (missing(mask.ok)) 
+##                 mask.ok &lt;- cr$mask.ok
+##             if (missing(exclude)) 
+##                 exclude &lt;- cr$exclude
+##             if (packageHasNamespace(package, which.lib.loc)) {
+##                 if (isNamespaceLoaded(package)) {
+##                   newversion &lt;- as.numeric_version(pkgInfo$DESCRIPTION["Version"])
+##                   oldversion &lt;- as.numeric_version(getNamespaceVersion(package))
+##                   if (newversion != oldversion) {
+##                     tryCatch(unloadNamespace(package), error = function(e) {
+##                       P &lt;- if (!is.null(cc &lt;- conditionCall(e))) 
+##                         paste("Error in", deparse(cc)[1L], ": ")
+##                       else "Error : "
+##                       stop(gettextf("Package %s version %s cannot be unloaded:\n %s", 
+##                         sQuote(package), oldversion, paste0(P, 
+##                           conditionMessage(e), "\n")), domain = NA)
+##                     })
+##                   }
+##                 }
+##                 tt &lt;- tryCatch({
+##                   attr(package, "LibPath") &lt;- which.lib.loc
+##                   ns &lt;- loadNamespace(package, lib.loc)
+##                   env &lt;- attachNamespace(ns, pos = pos, deps, 
+##                     exclude, include.only)
+##                 }, error = function(e) {
+##                   P &lt;- if (!is.null(cc &lt;- conditionCall(e))) 
+##                     paste(" in", deparse(cc)[1L])
+##                   else ""
+##                   msg &lt;- gettextf("package or namespace load failed for %s%s:\n %s", 
+##                     sQuote(package), P, conditionMessage(e))
+##                   if (logical.return &amp;&amp; !quietly) 
+##                     message(paste("Error:", msg), domain = NA)
+##                   else stop(msg, call. = FALSE, domain = NA)
+##                 })
+##                 if (logical.return &amp;&amp; is.null(tt)) 
+##                   return(FALSE)
+##                 attr(package, "LibPath") &lt;- NULL
+##                 {
+##                   on.exit(detach(pos = pos))
+##                   nogenerics &lt;- !.isMethodsDispatchOn() || checkNoGenerics(env, 
+##                     package)
+##                   if (isFALSE(conf.ctrl$generics.ok) || (stopOnConflict &amp;&amp; 
+##                     !isTRUE(conf.ctrl$generics.ok))) 
+##                     nogenerics &lt;- TRUE
+##                   if (stopOnConflict || (warn.conflicts &amp;&amp; !exists(".conflicts.OK", 
+##                     envir = env, inherits = FALSE))) 
+##                     checkConflicts(package, pkgname, pkgpath, 
+##                       nogenerics, ns)
+##                   on.exit()
+##                   if (logical.return) 
+##                     return(TRUE)
+##                   else return(invisible(.packages()))
+##                 }
+##             }
+##             else stop(gettextf("package %s does not have a namespace and should be re-installed", 
+##                 sQuote(package)), domain = NA)
+##         }
+##         if (verbose &amp;&amp; !newpackage) 
+##             warning(gettextf("package %s already present in search()", 
+##                 sQuote(package)), domain = NA)
+##     }
+##     else if (!missing(help)) {
+##         if (!character.only) 
+##             help &lt;- as.character(substitute(help))
+##         pkgName &lt;- help[1L]
+##         pkgPath &lt;- find.package(pkgName, lib.loc, verbose = verbose)
+##         docFiles &lt;- c(file.path(pkgPath, "Meta", "package.rds"), 
+##             file.path(pkgPath, "INDEX"))
+##         if (file.exists(vignetteIndexRDS &lt;- file.path(pkgPath, 
+##             "Meta", "vignette.rds"))) 
+##             docFiles &lt;- c(docFiles, vignetteIndexRDS)
+##         pkgInfo &lt;- vector("list", 3L)
+##         readDocFile &lt;- function(f) {
+##             if (basename(f) %in% "package.rds") {
+##                 txt &lt;- readRDS(f)$DESCRIPTION
+##                 if ("Encoding" %in% names(txt)) {
+##                   to &lt;- if (Sys.getlocale("LC_CTYPE") == "C") 
+##                     "ASCII//TRANSLIT"
+##                   else ""
+##                   tmp &lt;- try(iconv(txt, from = txt["Encoding"], 
+##                     to = to))
+##                   if (!inherits(tmp, "try-error")) 
+##                     txt &lt;- tmp
+##                   else warning("'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible", 
+##                     call. = FALSE)
+##                 }
+##                 nm &lt;- paste0(names(txt), ":")
+##                 formatDL(nm, txt, indent = max(nchar(nm, "w")) + 
+##                   3L)
+##             }
+##             else if (basename(f) %in% "vignette.rds") {
+##                 txt &lt;- readRDS(f)
+##                 if (is.data.frame(txt) &amp;&amp; nrow(txt)) 
+##                   cbind(basename(gsub("\\.[[:alpha:]]+$", "", 
+##                     txt$File)), paste(txt$Title, paste0(rep.int("(source", 
+##                     NROW(txt)), ifelse(nzchar(txt$PDF), ", pdf", 
+##                     ""), ")")))
+##                 else NULL
+##             }
+##             else readLines(f)
+##         }
+##         for (i in which(file.exists(docFiles))) pkgInfo[[i]] &lt;- readDocFile(docFiles[i])
+##         y &lt;- list(name = pkgName, path = pkgPath, info = pkgInfo)
+##         class(y) &lt;- "packageInfo"
+##         return(y)
+##     }
+##     else {
+##         if (is.null(lib.loc)) 
+##             lib.loc &lt;- .libPaths()
+##         db &lt;- matrix(character(), nrow = 0L, ncol = 3L)
+##         nopkgs &lt;- character()
+##         for (lib in lib.loc) {
+##             a &lt;- .packages(all.available = TRUE, lib.loc = lib)
+##             for (i in sort(a)) {
+##                 file &lt;- system.file("Meta", "package.rds", package = i, 
+##                   lib.loc = lib)
+##                 title &lt;- if (nzchar(file)) {
+##                   txt &lt;- readRDS(file)
+##                   if (is.list(txt)) 
+##                     txt &lt;- txt$DESCRIPTION
+##                   if ("Encoding" %in% names(txt)) {
+##                     to &lt;- if (Sys.getlocale("LC_CTYPE") == "C") 
+##                       "ASCII//TRANSLIT"
+##                     else ""
+##                     tmp &lt;- try(iconv(txt, txt["Encoding"], to, 
+##                       "?"))
+##                     if (!inherits(tmp, "try-error")) 
+##                       txt &lt;- tmp
+##                     else warning("'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible", 
+##                       call. = FALSE)
+##                   }
+##                   txt["Title"]
+##                 }
+##                 else NA
+##                 if (is.na(title)) 
+##                   title &lt;- " ** No title available ** "
+##                 db &lt;- rbind(db, cbind(i, lib, title))
+##             }
+##             if (length(a) == 0L) 
+##                 nopkgs &lt;- c(nopkgs, lib)
+##         }
+##         dimnames(db) &lt;- list(NULL, c("Package", "LibPath", "Title"))
+##         if (length(nopkgs) &amp;&amp; !missing(lib.loc)) {
+##             pkglist &lt;- paste(sQuote(nopkgs), collapse = ", ")
+##             msg &lt;- sprintf(ngettext(length(nopkgs), "library %s contains no packages", 
+##                 "libraries %s contain no packages"), pkglist)
+##             warning(msg, domain = NA)
+##         }
+##         y &lt;- list(header = NULL, results = db, footer = NULL)
+##         class(y) &lt;- "libraryIQR"
+##         return(y)
+##     }
+##     if (logical.return) 
+##         TRUE
+##     else invisible(.packages())
+## }
+## &lt;bytecode: 0x0000000012b35e68&gt;
+## &lt;environment: namespace:base&gt;
+```
+
+```r
+# Se usa el desc, para ordenar de mayor a menor
+arrange(mtcars, desc(mtcars$cyl))
+```
+
+```
+##                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+## Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+## Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+## Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+## Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+## Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+## Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+## Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+## Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+## Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+## AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+## Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+## Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+## Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+## Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+## Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+## Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+## Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+## Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+## Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+## Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+## Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+## Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+## Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+## Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+## Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+## Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+## Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+## Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+## Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+## Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+## Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
+```
+
+
+## Función rename
+usamos esta funcion para renombrar visualmente los campos de los datos, el resto
+de los campos no evaluados siguen con el mismo nombre
+
+```r
+library(dplyr)
+rename(storms, tormente = name, viento = wind, presion = pressure, Anio = year)
+```
+
+```
+## # A tibble: 10,010 x 13
+##    tormente  Anio month   day  hour   lat  long status   category viento presion
+##    &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;ord&gt;     &lt;int&gt;   &lt;int&gt;
+##  1 Amy       1975     6    27     0  27.5 -79   tropica~ -1           25    1013
+##  2 Amy       1975     6    27     6  28.5 -79   tropica~ -1           25    1013
+##  3 Amy       1975     6    27    12  29.5 -79   tropica~ -1           25    1013
+##  4 Amy       1975     6    27    18  30.5 -79   tropica~ -1           25    1013
+##  5 Amy       1975     6    28     0  31.5 -78.8 tropica~ -1           25    1012
+##  6 Amy       1975     6    28     6  32.4 -78.7 tropica~ -1           25    1012
+##  7 Amy       1975     6    28    12  33.3 -78   tropica~ -1           25    1011
+##  8 Amy       1975     6    28    18  34   -77   tropica~ -1           30    1006
+##  9 Amy       1975     6    29     0  34.4 -75.8 tropica~ 0            35    1004
+## 10 Amy       1975     6    29     6  34   -74.8 tropica~ 0            40    1002
+## # ... with 10,000 more rows, and 2 more variables: ts_diameter &lt;dbl&gt;,
+## #   hu_diameter &lt;dbl&gt;
+```
+
+## Funcion mutate
+esta funcion nos permite crear nuevas variables partiendo de otras
+
+
+```r
+library(dplyr)
+mutate(storms, ratio = pressure / wind)
+```
+
+```
+## # A tibble: 10,010 x 14
+##    name   year month   day  hour   lat  long status      category  wind pressure
+##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;ord&gt;    &lt;int&gt;    &lt;int&gt;
+##  1 Amy    1975     6    27     0  27.5 -79   tropical d~ -1          25     1013
+##  2 Amy    1975     6    27     6  28.5 -79   tropical d~ -1          25     1013
+##  3 Amy    1975     6    27    12  29.5 -79   tropical d~ -1          25     1013
+##  4 Amy    1975     6    27    18  30.5 -79   tropical d~ -1          25     1013
+##  5 Amy    1975     6    28     0  31.5 -78.8 tropical d~ -1          25     1012
+##  6 Amy    1975     6    28     6  32.4 -78.7 tropical d~ -1          25     1012
+##  7 Amy    1975     6    28    12  33.3 -78   tropical d~ -1          25     1011
+##  8 Amy    1975     6    28    18  34   -77   tropical d~ -1          30     1006
+##  9 Amy    1975     6    29     0  34.4 -75.8 tropical s~ 0           35     1004
+## 10 Amy    1975     6    29     6  34   -74.8 tropical s~ 0           40     1002
+## # ... with 10,000 more rows, and 3 more variables: ts_diameter &lt;dbl&gt;,
+## #   hu_diameter &lt;dbl&gt;, ratio &lt;dbl&gt;
+```
+
+# Funcion filter
+esta funcion es una de las mas usadas, se usa para filtrar observaciones o inform.
+tabla de caracteristicas  :
+%in%, pertenece al conjnto
+!=, diferente que
+is na, es NA
+xor,  o incluso.
+all,  todos los verdaderos
+any,  cualquier verdadero
+
+```r
+library(dplyr) 
+filter(storms, storms$wind &gt;= 50 &amp; storms$pressure &lt;= 1010 &amp; storms$month == 6 &amp; year == 2015)
+```
+
+```
+## # A tibble: 3 x 13
+##   name   year month   day  hour   lat  long status       category  wind pressure
+##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;ord&gt;    &lt;int&gt;    &lt;int&gt;
+## 1 Bill   2015     6    16    12  28   -96   tropical st~ 0           50      997
+## 2 Bill   2015     6    16    16  28.2 -96.7 tropical st~ 0           50      997
+## 3 Bill   2015     6    16    18  28.2 -96.7 tropical st~ 0           50      997
+## # ... with 2 more variables: ts_diameter &lt;dbl&gt;, hu_diameter &lt;dbl&gt;
+```
+
+#Funcion summarise
+esta funcion nos permite realizar operaciones de sjuma, mediana, var, etc, entre las funciones
+min(), max(), mean(), median(), sum(), var(), sd(), first(), last(), n(),  n_distinct(), nth()
+
+
+
+```r
+library(dplyr)
+summarise(storms, mediana = median(wind), vcarianza = var (wind)) 
+```
+
+```
+## # A tibble: 1 x 2
+##   mediana vcarianza
+##     &lt;dbl&gt;     &lt;dbl&gt;
+## 1      45      687.
+```
+
+# Funcion group_by
+
+```r
+library(dplyr)
+group_by(storms, name)
+```
+
+```
+## # A tibble: 10,010 x 13
+## # Groups:   name [198]
+##    name   year month   day  hour   lat  long status      category  wind pressure
+##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;ord&gt;    &lt;int&gt;    &lt;int&gt;
+##  1 Amy    1975     6    27     0  27.5 -79   tropical d~ -1          25     1013
+##  2 Amy    1975     6    27     6  28.5 -79   tropical d~ -1          25     1013
+##  3 Amy    1975     6    27    12  29.5 -79   tropical d~ -1          25     1013
+##  4 Amy    1975     6    27    18  30.5 -79   tropical d~ -1          25     1013
+##  5 Amy    1975     6    28     0  31.5 -78.8 tropical d~ -1          25     1012
+##  6 Amy    1975     6    28     6  32.4 -78.7 tropical d~ -1          25     1012
+##  7 Amy    1975     6    28    12  33.3 -78   tropical d~ -1          25     1011
+##  8 Amy    1975     6    28    18  34   -77   tropical d~ -1          30     1006
+##  9 Amy    1975     6    29     0  34.4 -75.8 tropical s~ 0           35     1004
+## 10 Amy    1975     6    29     6  34   -74.8 tropical s~ 0           40     1002
+## # ... with 10,000 more rows, and 2 more variables: ts_diameter &lt;dbl&gt;,
+## #   hu_diameter &lt;dbl&gt;
+```
+
+
+
+```r
+library(dplyr)
+storms %&gt;% group_by(name) %&gt;% 
+  summarise(media = mean(wind), suma = sum(wind), n = n())
+```
+
+```
+## # A tibble: 198 x 4
+##    name     media  suma     n
+##    &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt;
+##  1 AL011993  27.5   220     8
+##  2 AL012000  25     100     4
+##  3 AL021992  29     145     5
+##  4 AL021994  24.2   145     6
+##  5 AL021999  28.8   115     4
+##  6 AL022000  29.2   350    12
+##  7 AL022001  25     125     5
+##  8 AL022003  30     120     4
+##  9 AL022006  38     190     5
+## 10 AL031987  21.2   680    32
+## # ... with 188 more rows
+```
+
+# funcion gather()
+
+nos ayuda a reordenar los vallores de una columna, y las tranmsforma en filas.
+
+
+```r
+#library(dplyr)
+#gather(Stroms, "fecha", year:day  )
+```
+
+# ggplot2
+Nos permite graficar los dataset
+
+
+```r
+library(ggplot2)
+ggplot(diamonds, mapping = aes(x = carat, y = price, color = cut)) +
+  geom_point() + 
+  facet_wrap(~cut)
+```
+
+![](Manipulacion-de-Datos-dplyr-ggplot2---tidyr_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+
+```r
+  labs(title = "", subtitle ="", y = "", x="", caption = "esta es una prueba")
+```
+
+```
+## $y
+## [1] ""
+## 
+## $x
+## [1] ""
+## 
+## $title
+## [1] ""
+## 
+## $subtitle
+## [1] ""
+## 
+## $caption
+## [1] "esta es una prueba"
+## 
+## attr(,"class")
+## [1] "labels"
+```
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "hithub",
+"highlightLine": true,
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
